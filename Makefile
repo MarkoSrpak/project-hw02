@@ -4,7 +4,8 @@ OBJ=$(patsubst %.c, %.o, $(SRC))
 EXEOBJ=$(patsubst %.c, %.o, $(EXESRC))
 BIN=$(wildcard bin/*.bin)
 INC=inc/
-EXE=$(patsubst exesrc/%.c, exe/%.elf, $(EXESRC))
+#EXE=$(patsubst exesrc/%.c, exe/%.elf, $(EXESRC))
+EXE=exe/test_dft.elf exe/test_idft.elf
 
 CFLAGS=-I $(INC)
 
@@ -18,10 +19,8 @@ exe/%.elf: exesrc/%.o $(OBJ)
 %.o: %.c
 	gcc -c $< $(CFLAGS) -o $@
 
-run:
-#$(EXE)
-	exe/test_dft.elf
-	exe/test_idft.elf
+run: $(EXE)
+	$(foreach elf, $(EXE), $(elf);)
 	
 clean:
 	rm -f $(OBJ) $(EXE) $(EXEOBJ) $(BIN)
